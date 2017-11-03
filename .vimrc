@@ -44,6 +44,10 @@ Plugin 'townk/vim-autoclose'
 
 Plugin 'wincent/command-t'
 
+" Vim-airline plugin
+
+Plugin 'vim-airline/vim-airline'
+
 call vundle#end()
 filetype plugin indent on
 """" End Vundle Configuration
@@ -73,9 +77,10 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 let mapleader = ";"
 let g:mapleader = ";"
 
-map <leader>s :source ~/.vimrc<CR>
+map <leader>r :source ~/.vimrc<CR>
 
 " Ctrl+n to toggle nerdtree
+" NerdTree is a new window so to toggle use Ctrl+w
 map <C-n> :NERDTreeToggle<CR>
 
 " Enable filetype plugins and indentation
@@ -90,6 +95,8 @@ set background=dark  " Setting dark mode
 
 " set color scheme to be 256 color rather than 16 color pallete
 set t_Co=256
+
+set nuw=5
 
 " Set default font for vim
 set guifont=Menlo\ Regular:h18
@@ -128,3 +135,25 @@ set hidden
 " Set how many lines of history vim has to remember
 set history=700
 
+
+""""""""""""""""""""""""""""""""""""""""
+" VIM Keybindings
+""""""""""""""""""""""""""""""""""""""""
+
+" CTRL+c to exit insert mode and go to normal mode
+
+" Map <leader>s(;s) to save the current file opened in Vim
+noremap <leader>s :update<CR>
+vnoremap <leader>s <C-C>:update<CR>
+inoremap <leader>s <C-O>:update<CR>
+
+" Map <leader>w(;w) to save and quit the current file opened in Vim
+noremap <leader>w :wq<CR>
+vnoremap <leader>w :wq<CR>
+inoremap <leader>w :wq<CR>
+
+
+" Map <leader>q(;q) to quit the current file opened in Vim
+noremap <leader>q :q<CR>
+vnoremap <leader>q :q<CR>
+inoremap <leader>q :q<CR>
