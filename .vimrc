@@ -25,27 +25,21 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 
 " SuperTab Vim Plugin
-
 Plugin 'ervandew/supertab'
 
 " CTRLP vim 
-
 Plugin 'ctrlpvim/ctrlp.vim'
 
 " EditorConfig plugin
-
 Plugin 'editorconfig/editorconfig-vim'
 
 " Vim Autoclose for paranthesis and bracktes
-
 Plugin 'townk/vim-autoclose'
 
 " Fast File navigation for vim
-
 Plugin 'wincent/command-t'
 
 " Vim-airline plugin
-
 Plugin 'vim-airline/vim-airline'
 
 call vundle#end()
@@ -67,6 +61,18 @@ filetype plugin indent on
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
+" Vim Airline 
+
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename of the buffer
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" CtrlP vim
+
+" Set searching for CtrlP resticted to current working directory
+let g:ctrlp_working_path_mode = 0
 
 """""""""""""""""""""""""""""""""""""""""""
 " Configuration Section
@@ -87,15 +93,16 @@ map <C-n> :NERDTreeToggle<CR>
 filetype indent on
 filetype plugin on
 
-syntax on
-colorscheme gruvbox
-set background=dark  " Setting dark mode
+syntax on            " Turn ColorScheme on for syntax highlighting   
+colorscheme gruvbox  " ColorScheme
+set background=dark  " Setting dark mode for gruvbox
 " Other themes to be used : Tomorrow-Night, atom-dark-256 afterglow dracula
 " gruvbox
 
 " set color scheme to be 256 color rather than 16 color pallete
 set t_Co=256
 
+" Change gutter column width of number column 
 set nuw=5
 
 " Set default font for vim
@@ -104,14 +111,14 @@ set guifont=Menlo\ Regular:h18
 " Set numbering of lines
 set number
 
-" Set realive numbering
+" Set relative numbering 
 set relativenumber
 
 " Always show current position
 set ruler
 
 " Add a colored column at 90 to avoid going to far to the right
-set colorcolumn=90
+set colorcolumn=120
 
 " Highlight the current line on which the cursor is
 set cursorline
@@ -142,18 +149,52 @@ set history=700
 
 " CTRL+c to exit insert mode and go to normal mode
 
-" Map <leader>s(;s) to save the current file opened in Vim
+" Map <leader>s(;s) to save the current file opened in Vim and <leader>sa to
+" save all write all changed files and keep working
 noremap <leader>s :update<CR>
 vnoremap <leader>s <C-C>:update<CR>
 inoremap <leader>s <C-O>:update<CR>
 
-" Map <leader>w(;w) to save and quit the current file opened in Vim
-noremap <leader>w :wq<CR>
-vnoremap <leader>w :wq<CR>
-inoremap <leader>w :wq<CR>
+noremap <leader>sa :wa<CR>
+inoremap <leader>sa <C-O>:wa<CR>
 
+" Map <leader>w(;w) to save and quit the current file opened in Vim and
+" <leader>wa to write all files and quit
+noremap <leader>w :wq<CR>
+vnoremap <leader>w <C-C>:wq<CR>
+inoremap <leader>w <C-O>:wq<CR>
+
+noremap <leader>wa :xa<CR>
+inoremap <leader>wa <C-O>:xa<CR>
 
 " Map <leader>q(;q) to quit the current file opened in Vim
 noremap <leader>q :q<CR>
-vnoremap <leader>q :q<CR>
-inoremap <leader>q :q<CR>
+vnoremap <leader>q <C-C>:q<CR>
+inoremap <leader>q <C-O>:q<CR>
+
+" SET Up buffers for vim
+
+" Open a new empty buffer
+noremap <leader>t :enew<CR>
+inoremap <leader>t <C-O>f:enew<CR>
+
+" Navigation between buffers <leader>h for previous buffer and <leader>l for
+" next buffer
+noremap <leader>h :bprevious<CR>
+inoremap <leader>h <C-O>f:bprevious<CR>
+
+noremap <leader>l :bnext<CR>
+inoremap <leader>l <C-O>:bnext<CR>
+
+" Close the current buffer and move to the previous one
+noremap <leader>bq :bp <BAR> bd #<CR>
+inoremap <leader>bq <C-O>:bp <BAR> bd #<CR>
+
+" Mapping to move lines
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
