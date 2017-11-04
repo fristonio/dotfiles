@@ -69,6 +69,28 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename of the buffer
 let g:airline#extensions#tabline#fnamemod = ':t'
 
+" To restrict the number of characters in buffer-name in ariline
+
+function! airline#extensions#tabline#get_buffer_name(nr)
+  let name = bufname(a:nr)
+  let label = a:nr . ' '
+
+  if empty(name)
+    let label .= '[No Name]'
+  else
+    let label .= fnamemodify(name, ':t')
+  endif
+
+  if getbufvar(a:nr, '&modified') == 1
+    let label .= '[+]'
+  endif
+  
+  if strlen(label) > 25
+    let label = label[0:25] . '...'
+  endif
+  return label
+endfunction
+
 " CtrlP vim
 
 " Set searching for CtrlP resticted to current working directory
@@ -135,10 +157,6 @@ set shiftwidth=4
 set expandtab
 set autoindent
 
-" Scrolling in vim
-
-set scrolloff=5   " Keep n lines below and above the cursor
-
 " Speeding up vim
 
 set hidden
@@ -202,3 +220,4 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+
