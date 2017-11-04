@@ -135,6 +135,10 @@ set shiftwidth=4
 set expandtab
 set autoindent
 
+" Scrolling in vim
+
+set scrolloff=5   " Keep n lines below and above the cursor
+
 " Speeding up vim
 
 set hidden
