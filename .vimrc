@@ -42,6 +42,12 @@ Plugin 'wincent/command-t'
 " Vim-airline plugin
 Plugin 'vim-airline/vim-airline'
 
+" A vim fuzzy finder
+Plugin 'junegunn/fzf'
+
+" Vim Emmet
+Plugin 'mattn/emmet-vim'
+
 call vundle#end()
 filetype plugin indent on
 """" End Vundle Configuration
@@ -68,6 +74,9 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename of the buffer
 let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:user_emmet_leader_key=','
+let g:user_emmet_mode='inv'
 
 " To restrict the number of characters in buffer-name in ariline
 
@@ -96,6 +105,18 @@ endfunction
 " Set searching for CtrlP resticted to current working directory
 let g:ctrlp_working_path_mode = 0
 
+
+" Syntastic Configuration
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 """""""""""""""""""""""""""""""""""""""""""
 " Configuration Section
 """""""""""""""""""""""""""""""""""""""""""
@@ -104,6 +125,9 @@ let g:ctrlp_working_path_mode = 0
 " With mapping leader key we can add extra key combination
 let mapleader = ";"
 let g:mapleader = ";"
+
+" Set the timeout for the maaped key to be pressed
+set timeoutlen=300
 
 map <leader>r :source ~/.vimrc<CR>
 
@@ -126,6 +150,13 @@ set t_Co=256
 
 " Change gutter column width of number column 
 set nuw=5
+
+" This option determines the number of context lines you would like to see
+" above and below the cursor
+set scrolloff=10
+
+" Restrict vim from creating swp files
+set noswapfile
 
 " Set default font for vim
 set guifont=Menlo\ Regular:h18
@@ -203,21 +234,32 @@ inoremap <leader>t <C-O>f:enew<CR>
 " Navigation between buffers <leader>h for previous buffer and <leader>l for
 " next buffer
 noremap <leader>h :bprevious<CR>
-inoremap <leader>h <C-O>f:bprevious<CR>
+inoremap <leader>h <C-O>:bprevious<CR>
 
 noremap <leader>l :bnext<CR>
 inoremap <leader>l <C-O>:bnext<CR>
 
 " Close the current buffer and move to the previous one
-noremap <leader>bq :bp <BAR> bd #<CR>
-inoremap <leader>bq <C-O>:bp <BAR> bd #<CR>
+noremap <leader>bc :bp <BAR> bd #<CR>
+inoremap <leader>bc <C-O>:bp <BAR> bd #<CR>
 
 " Mapping to move lines
 
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+nnoremap <leader>d :m+1<CR>
+nnoremap <leader>u :m-2<CR>
+inoremap <leader>d <C-O>:m+1<CR>
+inoremap <leader>u <C-O>:m-2<CR>
+vnoremap <leader>d :m '>+1<CR>gv=gv
+vnoremap <leader>u :m '<-2<CR>gv=gv
 
+" Keybindings for move to matching brace, use <leader>m for the purpose
+noremap <leader>m %
+inoremap <leader>m <C-O>%
+
+" Append to the end of the line
+noremap <leader>a A
+inoremap <leader>a <C-O>A
+
+" Map a keybinding to escape
+noremap <leader>z <Esc>
+inoremap <leader>z <Esc>
