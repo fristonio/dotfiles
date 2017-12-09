@@ -7,7 +7,7 @@ A collection of my dotfiles.
 * [oh-my-zsh Theme](/wallpie.zsh-theme)
 * [ls-color-configuration](/ls.color)
 * [Terminator Configuration](/terminator.config)
-* [Tmux Configuration](/tmux.conf)
+* [Tmux Configuration](/.tmux.conf)
 
 ## Screenshots
 
