@@ -48,6 +48,9 @@ Plugin 'junegunn/fzf'
 " Vim Emmet
 Plugin 'mattn/emmet-vim'
 
+" Vim ployglot
+Plugin 'sheerun/vim-polyglot'
+
 call vundle#end()
 filetype plugin indent on
 """" End Vundle Configuration

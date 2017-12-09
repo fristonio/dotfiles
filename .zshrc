@@ -8,6 +8,8 @@ plugins=(git compleat)
 
 source $ZSH/oh-my-zsh.sh
 
+eval `dircolors ~/.config/ls_color/ls.color`
+
 export LANG=en_US.UTF-8
 export EDITOR='vim'
 
@@ -40,6 +42,7 @@ alias gl="git log --oneline --graph --abbrev-commit --decorate"
 alias gs="git status"
 alias gcr="git clone"
 alias gcn="git checkout -b"
+alias ls='ls --group-directories-first --color=auto'
 
 export PATH="$PATH:$HOME/bin/tig:$HOME/.config/composer/vendor/bin"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
