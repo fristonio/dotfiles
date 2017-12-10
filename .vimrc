@@ -43,13 +43,16 @@ Plugin 'wincent/command-t'
 Plugin 'vim-airline/vim-airline'
 
 " A vim fuzzy finder
-Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 " Vim Emmet
 Plugin 'mattn/emmet-vim'
 
 " Vim ployglot
 Plugin 'sheerun/vim-polyglot'
+
+" Fixing Tabular indentation
+Plugin 'godlygeek/tabular'
 
 call vundle#end()
 filetype plugin indent on
@@ -197,6 +200,17 @@ set hidden
 
 " Set how many lines of history vim has to remember
 set history=700
+
+" Turn on wildmenu
+set wildmenu
+
+" Set to autoread when a file is changed from outside
+set autoread
+
+" Search related tweaks
+set hlsearch
+set incsearch
+set magic
 
 
 """"""""""""""""""""""""""""""""""""""""
