@@ -78,6 +78,7 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 
+
 " Show just the filename of the buffer
 let g:airline#extensions#tabline#fnamemod = ':t'
 
@@ -86,25 +87,7 @@ let g:user_emmet_mode='inv'
 
 " To restrict the number of characters in buffer-name in ariline
 
-function! airline#extensions#tabline#get_buffer_name(nr)
-  let name = bufname(a:nr)
-  let label = a:nr . ' '
-
-  if empty(name)
-    let label .= '[No Name]'
-  else
-    let label .= fnamemodify(name, ':t')
-  endif
-
-  if getbufvar(a:nr, '&modified') == 1
-    let label .= '[+]'
-  endif
-  
-  if strlen(label) > 25
-    let label = label[0:25] . '...'
-  endif
-  return label
-endfunction
+let g:airline#extensions#tabline#fnametruncate = 25
 
 " CtrlP vim
 
@@ -212,6 +195,8 @@ set hlsearch
 set incsearch
 set magic
 
+" Set buffer to modifiable fix error with nerdtree to create a new npde's
+set modifiable
 
 """"""""""""""""""""""""""""""""""""""""
 " VIM Keybindings
