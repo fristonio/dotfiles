@@ -94,6 +94,13 @@ let g:airline#extensions#tabline#fnametruncate = 25
 " Set searching for CtrlP resticted to current working directory
 let g:ctrlp_working_path_mode = 0
 
+" File and directories ignore for ctrl-p
+" let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\v[\/](\.git|\.svn|node_modules|vendor|venv)',
+    \ 'files': '\v\.(o|so|test|swp|tmp)$'
+    \ }
+
 
 " Syntastic Configuration
 
@@ -123,6 +130,7 @@ map <leader>r :source ~/.vimrc<CR>
 " Ctrl+n to toggle nerdtree
 " NerdTree is a new window so to toggle use Ctrl+w
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden = 1
 
 " Enable filetype plugins and indentation
 filetype indent on

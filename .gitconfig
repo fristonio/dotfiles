@@ -2,3 +2,6 @@
     name = Deepesh Pathak
     email = deepshpathak@gmail.com
     username = fristonio
+    signingkey = D9AA53BEC9C33F71
+[core]
+    fileMode = false
