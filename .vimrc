@@ -54,6 +54,9 @@ Plugin 'sheerun/vim-polyglot'
 " Fixing Tabular indentation
 Plugin 'godlygeek/tabular'
 
+" Vim markdown plugin
+Plugin 'plasticboy/vim-markdown'
+
 call vundle#end()
 filetype plugin indent on
 """" End Vundle Configuration
@@ -153,7 +156,13 @@ set nuw=5
 set scrolloff=10
 
 " Restrict vim from creating swp files
-set noswapfile
+" set noswapfile
+
+" // at the end of the directory will store the files using full paths so 
+" file with same names in different directories do not conflict with each
+" other.
+set directory=~/.vim/.swap//
+set backupdir=~/.vim/.backup//
 
 " Set default font for vim
 set guifont=Menlo\ Regular:h18
@@ -273,3 +282,7 @@ inoremap <leader>a <C-O>A
 " Map a keybinding to escape
 noremap <leader>z <Esc>
 inoremap <leader>z <Esc>
+
+" Map bash toggle to Ctrl-D
+noremap <C-d> :sh<cr>
+inoremap <C-d> <Esc>:sh<cr>
