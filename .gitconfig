@@ -4,4 +4,8 @@
     username = fristonio
     signingkey = D9AA53BEC9C33F71
 [core]
+    editor = vim
     fileMode = false
+    autocrlf = false
+[commit]
+    gpgSign = true

@@ -15,8 +15,9 @@ call vundle#begin()
 " Vundle to manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
-" Gruvbox vim theme
-Plugin 'morhetz/gruvbox'
+" Onedark and Gruvbox vim theme
+" Plugin 'morhetz/gruvbox'
+Plugin 'joshdick/onedark.vim'
 
 " NerdTree Plugin for vim for tree exploration
 Plugin 'scrooloose/nerdtree'
@@ -140,7 +141,8 @@ filetype indent on
 filetype plugin on
 
 syntax on            " Turn ColorScheme on for syntax highlighting   
-colorscheme gruvbox  " ColorScheme
+syntax enable
+colorscheme onedark  " ColorScheme
 set background=dark  " Setting dark mode for gruvbox
 " Other themes to be used : Tomorrow-Night, atom-dark-256 afterglow dracula
 " gruvbox
@@ -189,6 +191,8 @@ set laststatus=2
 
 " set nowrap
 set smartindent
+set ignorecase
+set smartcase
 set tabstop=4
 set shiftwidth=4
 set expandtab
