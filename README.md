@@ -1,20 +1,8 @@
 # dotfiles
 
-A collection of my dotfiles.
+My Setup
 
-* [Vim Configuration](/.vimrc)
-* [ZSH Configuration](/.zshrc)
-* [oh-my-zsh Theme](/wallpie.zsh-theme)
-* [ls-color-configuration](/ls.color)
-* [Terminator Configuration](/terminator.config)
-* [Tmux Configuration](/.tmux.conf)
+* Arch Linux
+* i3 Window manager
 
-## Screenshots
-
-### Vim
-
-![Vim](/res/vim.png)
-
-### Terminal
-
-![Terminal](/res/terminal.png)
+![Setup](/res/setup.png)
