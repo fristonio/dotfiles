@@ -73,6 +73,7 @@
  '(package-selected-packages
    (quote
     (racer editorconfig company neotree ido-completing-read+ smex auto-complete gruvbox-theme)))
+ '(send-mail-function (quote mailclient-send-it))
  '(whitespace-style
    (quote
     (face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))))
@@ -138,9 +139,9 @@
 (load "~/.emacs.rc/company-rc.el")
 (load "~/.emacs.rc/editorconfig-rc.el")
 (load "~/.emacs.rc/racer-rc.el")
+(load "~/.emacs.rc/org-mode-rc.el")
 
 ;; A hook to change the linum mode for certain modes
 (add-hook 'after-change-major-mode-hook
             '(lambda ()
                (linum-mode (if (or (equal major-mode 'text-mode) (equal major-mode 'term-mode) (equal major-mode 'help-mode)) 0 1))))
-
