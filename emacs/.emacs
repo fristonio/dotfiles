@@ -119,6 +119,7 @@
 (load "~/.emacs.rc/ggtags-rc.el")
 (load "~/.emacs.rc/dired-rc.el")
 (load "~/.emacs.rc/helm-rc.el")
+(load "~/.emacs.rc/ibuffer-rc.el")
 (load "~/.emacs.rc/yasnippet-rc.el")
 (load "~/.emacs.rc/rainbow-rc.el")
 (load "~/.emacs.rc/js-rc.el")
@@ -148,7 +149,7 @@
  '(org-refile-use-outline-path (quote file))
  '(package-selected-packages
    (quote
-    (all-the-icons auto-complete yasnippet yaml-mode toml-mode smex rainbow-mode racer powerline php-mode paredit org-pomodoro nix-mode nginx-mode neotree multiple-cursors markdown-mode magit kotlin-mode js2-mode ido-completing-read+ htmlize hlinum helm-ls-git helm-git-grep helm-cmd-t haskell-mode gruvbox-theme go-mode ggtags elm-mode editorconfig dockerfile-mode dash-functional company cmake-mode clojure-mode autopair ack)))
+    (dired-x dired+ all-the-icons auto-complete yasnippet yaml-mode toml-mode smex rainbow-mode racer powerline php-mode paredit org-pomodoro nix-mode nginx-mode neotree multiple-cursors markdown-mode magit kotlin-mode js2-mode ido-completing-read+ htmlize hlinum helm-ls-git helm-git-grep helm-cmd-t haskell-mode gruvbox-theme go-mode ggtags elm-mode editorconfig dockerfile-mode dash-functional company cmake-mode clojure-mode autopair ack)))
  '(whitespace-style
    (quote
     (face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))))
@@ -158,3 +159,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)
