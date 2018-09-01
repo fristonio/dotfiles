@@ -160,3 +160,6 @@
  ;; If there is more than one, they won't work right.
  )
 (put 'downcase-region 'disabled nil)
+
+(rc/require 'multi-term)
+(setq multi-term-program "/bin/bash")
