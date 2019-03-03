@@ -68,6 +68,8 @@
 ;; Map M-X to smex
 (rc/require 'smex 'ido-completing-read+)
 (global-set-key (kbd "M-x") 'smex)
+(global-unset-key "\C-z")
+(global-set-key "\C-z" 'advertised-undo)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 (rc/require 'hlinum)
@@ -77,7 +79,7 @@
 ;; Vertiacal split, kill horizontal-split and window-change respectivily
 (define-key key-translation-map (kbd "C-x C-v") (kbd "C-x 3-"))
 (define-key key-translation-map (kbd "C-x C-k") (kbd "C-x 0-"))
-(define-key key-translation-map (kbd "C-x C-b") (kbd "C-x 2-"))
+(define-key key-translation-map (kbd "C-x C-h") (kbd "C-x 2-"))
 (define-key key-translation-map (kbd "C-x C-m") (kbd "C-x o-"))
 
 ;; Packages that don't require configurations
@@ -88,6 +90,7 @@
 	    'clojure-mode
 	    'rust-mode
 	    'markdown-mode
+	    'helm-ls-git
 	    'htmlize
 	    'nix-mode
 	    'dockerfile-mode
@@ -101,11 +104,43 @@
 	    'org-pomodoro
 	    'powerline
 	    'auto-complete
-	    )
+	    'atom-one-dark-theme)
+
+(require 'git-gutter-fringe+)
+(global-git-gutter+-mode)
+
+(set-face-foreground 'git-gutter-fr+-modified "#b58900")
+(set-face-foreground 'git-gutter-fr+-added    "#859900")
+(set-face-foreground 'git-gutter-fr+-deleted  "#dc322f")
+
+(set-face-background 'git-gutter-fr+-modified "none")
+(set-face-background 'git-gutter-fr+-added    "none")
+(set-face-background 'git-gutter-fr+-deleted  "none")
+
+(fringe-helper-define 'git-gutter-fr:modified nil
+  "........"
+  "........"
+  "...XX..."
+  "..XXXX.."
+  "..XXXX.."
+  "...XX..."
+  "........"
+  "........")
+
+(setq-default left-fringe-width  24)
+(setq-default right-fringe-width 24)
 
 (powerline-default-theme)
 ;; auto-complete default configuration
 (ac-config-default)
+
+;; A hook to change the linum mode for certain modes
+(add-hook 'after-change-major-mode-hook
+            '(lambda ()
+               (linum-mode (if (or (equal major-mode 'text-mode) (equal major-mode 'term-mode) (equal major-mode 'help-mode)) 0 1))))
+
+(rc/require 'multi-term)
+(setq multi-term-program "/bin/bash")
 
 ;; Add a bunch of other modes using their rc files in ~/.emacs.rc
 (load "~/.emacs.rc/cppmode-rc.el")
@@ -129,37 +164,3 @@
 (load "~/.emacs.rc/racer-rc.el")
 (load "~/.emacs.rc/org-mode-rc.el")
 
-;; A hook to change the linum mode for certain modes
-(add-hook 'after-change-major-mode-hook
-            '(lambda ()
-               (linum-mode (if (or (equal major-mode 'text-mode) (equal major-mode 'term-mode) (equal major-mode 'help-mode)) 0 1))))
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-dim-blocked-tasks nil)
- '(org-agenda-exporter-settings (quote ((org-agenda-tag-filter-preset (list "+personal")))))
- '(org-enforce-todo-dependencies nil)
- '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
- '(org-refile-use-outline-path (quote file))
- '(package-selected-packages
-   (quote
-    (dired-x dired+ all-the-icons auto-complete yasnippet yaml-mode toml-mode smex rainbow-mode racer powerline php-mode paredit org-pomodoro nix-mode nginx-mode neotree multiple-cursors markdown-mode magit kotlin-mode js2-mode ido-completing-read+ htmlize hlinum helm-ls-git helm-git-grep helm-cmd-t haskell-mode gruvbox-theme go-mode ggtags elm-mode editorconfig dockerfile-mode dash-functional company cmake-mode clojure-mode autopair ack)))
- '(whitespace-style
-   (quote
-    (face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(put 'downcase-region 'disabled nil)
-
-(rc/require 'multi-term)
-(setq multi-term-program "/bin/bash")

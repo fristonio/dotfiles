@@ -1,6 +1,10 @@
 (global-set-key (kbd "C-x a") 'org-agenda)
+(global-set-key (kbd "C-c C-x j") #'org-clock-jump-to-current-clock)
 
-(setq org-agenda-files (list "~/Documents/Agenda/"))
+(rc/require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(setq org-agenda-files (list "~/Documents/orgfiles/"))
 
 (setq org-export-backends '(md))
 
