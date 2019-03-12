@@ -61,9 +61,15 @@
 (load "~/.emacs.rc/rc.el")
 
 ;; Set the font to be used in emacs
-(set-default-font "Hack-10.3")
+(set-default-font "Hack-11")
 
 (rc/require-theme 'gruvbox)
+
+;; (require 'doom-themes)
+;; (load-theme 'doom-one t)
+
+;; (rc/require 'base16-theme)
+;; (load-theme 'base16-atelier-dune t)
 
 ;; Map M-X to smex
 (rc/require 'smex 'ido-completing-read+)
@@ -80,7 +86,8 @@
 (define-key key-translation-map (kbd "C-x C-v") (kbd "C-x 3-"))
 (define-key key-translation-map (kbd "C-x C-k") (kbd "C-x 0-"))
 (define-key key-translation-map (kbd "C-x C-h") (kbd "C-x 2-"))
-(define-key key-translation-map (kbd "C-x C-m") (kbd "C-x o-"))
+
+(define-key key-translation-map (kbd "<C-tab>") (kbd "C-x o-"))
 
 ;; Packages that don't require configurations
 ;; Emacs modes
@@ -103,32 +110,30 @@
 	    'ack
 	    'org-pomodoro
 	    'powerline
-	    'auto-complete
-	    'atom-one-dark-theme)
+	    'auto-complete)
 
-(require 'git-gutter-fringe+)
-(global-git-gutter+-mode)
+;; (rc/require 'moe-theme)
+;; (require 'moe-theme)
+;; (setq moe-theme-highlight-buffer-id t)
+;; (setq moe-light-pure-white-background-in-terminal t)
 
-(set-face-foreground 'git-gutter-fr+-modified "#b58900")
-(set-face-foreground 'git-gutter-fr+-added    "#859900")
-(set-face-foreground 'git-gutter-fr+-deleted  "#dc322f")
+;; (load-theme 'moe-dark t)
+;; (moe-dark)
+;; (moe-theme-set-color 'cyan)
 
-(set-face-background 'git-gutter-fr+-modified "none")
-(set-face-background 'git-gutter-fr+-added    "none")
-(set-face-background 'git-gutter-fr+-deleted  "none")
+;; (require 'git-gutter-fringe+)
+;; (global-git-gutter+-mode)
 
-(fringe-helper-define 'git-gutter-fr:modified nil
-  "........"
-  "........"
-  "...XX..."
-  "..XXXX.."
-  "..XXXX.."
-  "...XX..."
-  "........"
-  "........")
+;; (set-face-foreground 'git-gutter-fr+-modified "#b58900")
+;; (set-face-foreground 'git-gutter-fr+-added    "#859900")
+;; (set-face-foreground 'git-gutter-fr+-deleted  "#dc322f")
 
-(setq-default left-fringe-width  24)
-(setq-default right-fringe-width 24)
+;; (set-face-background 'git-gutter-fr+-modified "none")
+;; (set-face-background 'git-gutter-fr+-added    "none")
+;; (set-face-background 'git-gutter-fr+-deleted  "none")
+
+;; (setq-default left-fringe-width  24)
+;; (setq-default right-fringe-width 24)
 
 (powerline-default-theme)
 ;; auto-complete default configuration
@@ -142,7 +147,10 @@
 (rc/require 'multi-term)
 (setq multi-term-program "/bin/bash")
 
+(global-set-key (kbd "C-x C-m") 'multi-term)
+
 ;; Add a bunch of other modes using their rc files in ~/.emacs.rc
+(load "~/.emacs.rc/keybindings-rc.el")
 (load "~/.emacs.rc/cppmode-rc.el")
 (load "~/.emacs.rc/paredit-rc.el")
 (load "~/.emacs.rc/autopair-rc.el")
@@ -153,8 +161,6 @@
 (load "~/.emacs.rc/multiple-cursors-rc.el")
 (load "~/.emacs.rc/ggtags-rc.el")
 (load "~/.emacs.rc/dired-rc.el")
-(load "~/.emacs.rc/helm-rc.el")
-(load "~/.emacs.rc/ibuffer-rc.el")
 (load "~/.emacs.rc/yasnippet-rc.el")
 (load "~/.emacs.rc/rainbow-rc.el")
 (load "~/.emacs.rc/js-rc.el")
@@ -162,5 +168,27 @@
 (load "~/.emacs.rc/company-rc.el")
 (load "~/.emacs.rc/editorconfig-rc.el")
 (load "~/.emacs.rc/racer-rc.el")
-(load "~/.emacs.rc/org-mode-rc.el")
+(load "~/.emacs.rc/helm-rc.el")
+
+
+(add-hook 'python-mode-hook
+      (lambda ()
+        (setq indent-tabs-mode nil)
+        (setq tab-width 4)
+        (setq python-indent-offset 4)))
+
+(rc/require 'dashboard)
+(dashboard-setup-startup-hook)
+
+(setq dashboard-items '((recents  . 8)
+			(bookmarks . 5)
+			(projects . 5)
+			(registers . 5)))
+
+(setq dashboard-banner-logo-title "Fristonio")
+(setq dashboard-startup-banner 1)
+
+(setq whitespace-line-column 80)
+(setq whitespace-style '(face lines-tail))
+(add-hook 'prog-mode-hook 'whitespace-mode)
 

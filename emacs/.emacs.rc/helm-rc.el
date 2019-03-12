@@ -1,14 +1,16 @@
 (setq helm-ff-transformer-show-only-basename nil)
+(require 'helm-config)
+(require 'helm-mode)
+
+(global-set-key (kbd "<C-return>") 'helm-git-grep)
+
+;; Helm finding files, overrides default
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
+(define-key helm-find-files-map (kbd "<C-backspace>") 'helm-find-files-up-one-level)
+
+
+(global-set-key (kbd "C-x C-b") 'helm-mini)
 
 (global-unset-key (kbd "C-x C-p"))
 (global-set-key (kbd "C-x C-p") 'helm-browse-project)
-
-(global-set-key (kbd "C-c h t") 'helm-cmd-t)
-(global-set-key (kbd "C-x C-g") 'helm-git-grep)
-(global-set-key (kbd "C-c h g l") 'helm-ls-git-ls)
-;; Helm finding files, overrides default
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-c h a") 'helm-org-agenda-files-headings)
-(global-set-key (kbd "C-c h r") 'helm-recentf)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-c h i") 'helm-imenu)
