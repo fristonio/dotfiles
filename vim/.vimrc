@@ -17,10 +17,12 @@ Plugin 'gmarik/Vundle.vim'
 
 " Onedark and Gruvbox vim theme
 " Plugin 'morhetz/gruvbox'
-Plugin 'joshdick/onedark.vim'
+" Plugin 'joshdick/onedark.vim'
 
 " NerdTree Plugin for vim for tree exploration
 Plugin 'scrooloose/nerdtree'
+
+Plugin 'powerline/powerline'
 
 " GitGutter Plugin to see git diff in real time
 Plugin 'airblade/vim-gitgutter'
@@ -30,9 +32,6 @@ Plugin 'ervandew/supertab'
 
 " CTRLP vim 
 Plugin 'ctrlpvim/ctrlp.vim'
-
-" EditorConfig plugin
-Plugin 'editorconfig/editorconfig-vim'
 
 " Vim Autoclose for paranthesis and bracktes
 Plugin 'townk/vim-autoclose'
@@ -55,8 +54,11 @@ Plugin 'sheerun/vim-polyglot'
 " Fixing Tabular indentation
 Plugin 'godlygeek/tabular'
 
-" Vim markdown plugin
-Plugin 'plasticboy/vim-markdown'
+Plugin 'chriskempson/base16-vim'
+
+" Securemodeline plugin
+Plugin 'ciaranm/securemodelines'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -65,6 +67,51 @@ filetype plugin indent on
 """""""""""""""""""""""""""""""""""""""""""
 " Vundles plugins configuration
 """""""""""""""""""""""""""""""""""""""""""
+" Setup GUI
+if !has('gui_running')
+  set t_Co=256
+endif
+if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+  " screen does not (yet) support truecolor
+  set termguicolors
+endif
+
+syntax on
+syntax enable
+colorscheme base16-atelier-dune
+set background=dark
+
+highlight CursorLine   ctermbg=236
+highlight VertSplit    ctermbg=236
+highlight ColorColumn  ctermbg=237
+highlight LineNr       ctermbg=236 ctermfg=240
+highlight CursorLineNr ctermbg=236 ctermfg=240
+highlight StatusLineNC ctermbg=238 ctermfg=0
+highlight StatusLine   ctermbg=240 ctermfg=12
+highlight IncSearch    ctermbg=3   ctermfg=1
+highlight Search       ctermbg=1   ctermfg=3
+highlight Visual       ctermbg=3   ctermfg=0
+highlight Pmenu        ctermbg=240 ctermfg=12
+highlight PmenuSel     ctermbg=3   ctermfg=1
+highlight SpellBad     ctermbg=0   ctermfg=1
+
+
+"""""""""""""""""
+" SecureModeLine
+"""""""""""""""""
+let g:secure_modelines_allowed_items = [
+    \ "textwidth",   "tw",
+    \ "softtabstop", "sts",
+    \ "tabstop",     "ts",
+    \ "shiftwidth",  "sw",
+    \ "expandtab",   "et",   "noexpandtab", "noet",
+    \ "filetype",    "ft",
+    \ "foldmethod",  "fdm",
+    \ "readonly",    "ro",   "noreadonly", "noro",
+    \ "rightleft",   "rl",   "norightleft", "norl",
+    \ "colorcolumn"
+    \ ]
+
 """""""""""""""""
 " NerdTree
 """""""""""""""""
@@ -77,23 +124,21 @@ filetype plugin indent on
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-" Vim Airline 
-
+"""""""""""""""""
+" Airline
+"""""""""""""""""
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
-
-
 " Show just the filename of the buffer
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-let g:user_emmet_leader_key=','
-let g:user_emmet_mode='inv'
-
 " To restrict the number of characters in buffer-name in ariline
-
 let g:airline#extensions#tabline#fnametruncate = 25
 
+set noshowmode
+""""""""""""""""""
 " CtrlP vim
+""""""""""""""""""
 
 " Set searching for CtrlP resticted to current working directory
 let g:ctrlp_working_path_mode = 0
@@ -139,16 +184,6 @@ let NERDTreeShowHidden = 1
 " Enable filetype plugins and indentation
 filetype indent on
 filetype plugin on
-
-syntax on            " Turn ColorScheme on for syntax highlighting   
-syntax enable
-colorscheme onedark  " ColorScheme
-set background=dark  " Setting dark mode for gruvbox
-" Other themes to be used : Tomorrow-Night, atom-dark-256 afterglow dracula
-" gruvbox
-
-" set color scheme to be 256 color rather than 16 color pallete
-set t_Co=256
 
 " Change gutter column width of number column 
 set nuw=5
@@ -218,12 +253,26 @@ set magic
 
 " Set buffer to modifiable fix error with nerdtree to create a new npde's
 set modifiable
+set nowrap
+set nojoinspaces
 
+set diffopt+=iwhite " No whitespace in vimdiff
+" Make diffing better: https://vimways.org/2018/the-power-of-diff/
+set diffopt+=algorithm:patience
+set diffopt+=indent-heuristic
+set colorcolumn=80 " and give me a colored column
+set showcmd " Show (partial) command in status line.
+set mouse=a " Enable mouse usage (all modes) in terminals
+set shortmess+=c " don't give |ins-completion-menu| messages.
 """"""""""""""""""""""""""""""""""""""""
 " VIM Keybindings
 """"""""""""""""""""""""""""""""""""""""
 
 " CTRL+c to exit insert mode and go to normal mode
+inoremap <C-j> <Esc>
+vnoremap <C-j> <Esc>
+inoremap <C-c> <Esc>
+vnoremap <C-c> <Esc>
 
 " Map <leader>s(;s) to save the current file opened in Vim and <leader>sa to
 " save all write all changed files and keep working
@@ -254,6 +303,12 @@ inoremap <leader>q <C-O>:q<CR>
 noremap <leader>t :enew<CR>
 inoremap <leader>t <C-O>f:enew<CR>
 
+" Neat X clipboard integration
+" ,p will paste clipboard into buffer
+" ,c will copy entire buffer into clipboard
+noremap <leader>p :read !xsel --clipboard --output<cr>
+noremap <leader>c :w !xsel -ib<cr><cr>
+
 " Navigation between buffers <leader>h for previous buffer and <leader>l for
 " next buffer
 noremap <leader>h :bprevious<CR>
@@ -261,6 +316,9 @@ inoremap <leader>h <C-O>:bprevious<CR>
 
 noremap <leader>l :bnext<CR>
 inoremap <leader>l <C-O>:bnext<CR>
+
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <c-^>
 
 " Close the current buffer and move to the previous one
 noremap <leader>bc :bp <BAR> bd #<CR>
@@ -282,10 +340,6 @@ inoremap <leader>m <C-O>%
 " Append to the end of the line
 noremap <leader>a A
 inoremap <leader>a <C-O>A
-
-" Map a keybinding to escape
-noremap <leader>z <Esc>
-inoremap <leader>z <Esc>
 
 " Map bash toggle to Ctrl-D
 noremap <C-d> :sh<cr>
