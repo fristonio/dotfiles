@@ -12,13 +12,11 @@ function parse_git_branch {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-PS1="\e[0;34m[\e[0;32m\u\e[0;34m] \e[0;34m\$ \e[1;33m\$(dirs +0) "
-PS1+="\e[0;34m\$(parse_git_branch)"
-PS1+="\n\e[0;34m❮❮\e[0m "
+PS1="\[\e[0;34m\][\[\e[0;32m\]\u\[\e[0;34m\]] \[\e[0;34m\]\$ \[\e[1;33m\]\$(dirs +0) "
+PS1+="\[\e[0;34m\]\$(parse_git_branch)"
+PS1+="\n\[\e[0;34m\]❮❮\[\e[0m\] "
 
 eval `dircolors ~/.config/ls_color/ls.color`
-# PS1='[\u@\h \W]\$ '
-# PS1='\e[0;34m[\e[0;32m\u\e[0;34m] \e[0;34m\$ \e[1;33m$(dirs +0) \n\e[0;34m❮❮\e[0m '
 
 alias cl="clear"
 alias off="sudo poweroff"
@@ -37,15 +35,19 @@ alias l='ls -la --color=auto --group-directories-first'
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
+alias fb='filebrowser -d ~/.filebrowser.db -p 4444 -a 0.0.0.0'
+
+alias grep='grep -i --color'
+
 [ -s "/home/fristonio/.scm_breeze/scm_breeze.sh" ] && source "/home/fristonio/.scm_breeze/scm_breeze.sh"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 export HISTFILESIZE=
 export HISTSIZE=
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/golang
+export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/bin:$PATH
+export GO111MODULE=on
+
