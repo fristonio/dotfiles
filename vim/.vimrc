@@ -48,6 +48,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'townk/vim-autoclose'
 Plug 'wincent/command-t'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'airblade/vim-rooter'
+Plug 'ervandew/supertab'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -206,7 +208,7 @@ let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
+let g:NERDTreeWinSize = 30
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
 " Open NerdTree  automatically when vim starts up on opening a directory
@@ -236,9 +238,6 @@ let g:ctrlp_custom_ignore = {
 
 " Emulate Terminal within vim.
 nnoremap <silent> <leader>sh :terminal<CR>
-
-" remove trailing whitespaces
-command! FixWhitespace :%s/\s\+$//e
 
 "" fzf.vim
 set wildmode=list:longest,list:full
@@ -299,6 +298,8 @@ if !exists('*s:setupWrapping')
     set textwidth=79
   endfunction
 endif
+
+set textwidth=119
 
 "*****************************************************************************
 "" Autocmd Rules
@@ -473,6 +474,10 @@ nnoremap <leader>. :lcd %:p:h<CR>
 noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
+"" Split
+noremap <Leader>h :<C-u>split<CR>
+noremap <Leader>v :<C-u>vsplit<CR>
+
 " Navigation between buffers <leader>h for previous buffer and <leader>l for
 " next buffer
 noremap <leader>h :bprevious<CR>
@@ -510,6 +515,7 @@ inoremap <leader>a <C-O>A
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
+inoremap <silent> <leader><space> <C-O>:noh<cr>
 
 "" Switching windows
 noremap <C-j> <C-w>j
