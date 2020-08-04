@@ -1,0 +1,206 @@
+# {{{Color Schemes
+schemes:
+# {{{ Gruvbox Material Dark
+  gruvbox_material_dark: &gruvbox_material_dark
+    primary:
+      background: '#282828'
+      foreground: '#d4be98'
+
+    normal:
+      black:   '#282828'
+      red:     '#ea6962'
+      green:   '#a9b665'
+      yellow:  '#d8a657'
+      blue:    '#7daea3'
+      magenta: '#d3869b'
+      cyan:    '#89b482'
+      white:   '#d4be98'
+
+    bright:
+      black:   '#282828'
+      red:     '#ea6962'
+      green:   '#a9b665'
+      yellow:  '#d8a657'
+      blue:    '#7daea3'
+      magenta: '#d3869b'
+      cyan:    '#89b482'
+      white:   '#d4be98'
+# }}}
+# {{{ Gruvbox Mix Dark
+  gruvbox_mix_dark: &gruvbox_mix_dark
+    primary:
+      background: '#282828'
+      foreground: '#e2cca9'
+
+    normal:
+      black:   '#504945'
+      red:     '#f2594b'
+      green:   '#b0b846'
+      yellow:  '#e9b143'
+      blue:    '#80aa9e'
+      magenta: '#d3869b'
+      cyan:    '#8bba7f'
+      white:   '#e2cca9'
+
+    bright:
+      black:   '#504945'
+      red:     '#f2594b'
+      green:   '#b0b846'
+      yellow:  '#e9b143'
+      blue:    '#80aa9e'
+      magenta: '#d3869b'
+      cyan:    '#8bba7f'
+      white:   '#e2cca9'
+# }}}
+# {{{ Edge Dark
+  edge_dark: &edge_dark
+    primary:
+      background: '#2c2e34'
+      foreground: '#c5cdd9'
+
+    normal:
+      black: '#3e4249'
+      red: '#ec7279'
+      green: '#a0c980'
+      yellow: '#deb974'
+      blue: '#6cb6eb'
+      magenta: '#d38aea'
+      cyan: '#5dbbc1'
+      white: '#88909f'
+
+    bright:
+      black: '#3e4249'
+      red: '#ec7279'
+      green: '#a0c980'
+      yellow: '#deb974'
+      blue: '#6cb6eb'
+      magenta: '#d38aea'
+      cyan: '#5dbbc1'
+      white: '#88909f'
+# }}}
+# {{{ Edge dark neon
+  edge_dark_neon:  &edge_dark_neon
+    primary:
+      background: "0x2b2d3a"
+      foreground: "0xc5cdd9"
+  
+    normal:
+      black: "0x363a4e"
+      red: "0xec7279"
+      green: "0xa0c980"
+      yellow: "0xdeb974"
+      blue: "0x6cb6eb"
+      magenta: "0xd38aea"
+      cyan: "0x5dbbc1"
+      white: "0xc5cdd9"
+  
+    bright:
+      black: "0x363a4e"
+      red: "0xec7279"
+      green: "0xa0c980"
+      yellow: "0xdeb974"
+      blue: "0x6cb6eb"
+      magenta: "0xd38aea"
+      cyan: "0x5dbbc1"
+      white: "0xc5cdd9"
+# }}}
+# {{{ Forest Night
+  forest_night: &forest_night
+    primary:
+      background: '#323d43'
+      foreground: '#d8caac'
+
+    normal:
+      black:   '#868d80'
+      red:     '#e68183'
+      green:   '#a7c080'
+      yellow:  '#d9bb80'
+      blue:    '#89beba'
+      magenta: '#d3a0bc'
+      cyan:    '#87c095'
+      white:   '#d8caac'
+
+    bright:
+      black:   '#868d80'
+      red:     '#e68183'
+      green:   '#a7c080'
+      yellow:  '#d9bb80'
+      blue:    '#89beba'
+      magenta: '#d3a0bc'
+      cyan:    '#87c095'
+      white:   '#d8caac'
+# }}}
+colors: *edge_dark
+background_opacity: 1.0
+draw_bold_text_with_bright_colors: true
+use_thin_strokes: true
+
+font:
+  size: 12.25
+  # The normal (roman) font face to use.
+  normal:
+    family: Fira Code
+    # Style can be specified to pick a specific face.
+    style: Regular
+
+  # The bold font face
+  bold:
+    family: Fira Code
+    # Style can be specified to pick a specific face.
+    style: Bold
+
+  # The italic font face
+  italic:
+    family: Fira Code
+    # Style can be specified to pick a specific face.
+    style: Italic
+
+
+key_bindings:
+  - { key: V, mods: Control|Shift, action: Paste }
+  - { key: C, mods: Control|Shift, action: Copy }
+
+env:
+  TERM: xterm-256color
+
+window:
+  dimensions:
+    columns: 180
+    lines: 60
+  position:
+    x: 0
+    y: 0
+  padding:
+    x: 0
+    y: 0
+  dynamic_padding: false
+  decorations: none
+  startup_mode: Maximized
+  title: Alacritty
+  dynamic_title: true
+  class:
+    instance: Alacritty
+    general: Alacritty
+  gtk_theme_variant: None
+
+cursor:
+  style: Beam
+  unfocused_hollow: true
+
+scrolling:
+  history: 10000
+  multiplier: 3
+
+alt_send_esc: true
+
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: true
+
+selection:
+  semantic_escape_chars: ',│`|:"'' ()[]{}<>'
+  save_to_clipboard: false
+
+live_config_reload: true
+# }}}
