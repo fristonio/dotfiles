@@ -8,13 +8,17 @@
 export LANG=en_US.UTF-8
 export EDITOR='vim'
 
-function parse_git_branch {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/( \1)/'
 }
 
 PS1="\[\e[0;34m\][\[\e[0;32m\]\u\[\e[0;34m\]] \[\e[0;34m\]\$ \[\e[1;33m\]\$(dirs +0) "
-PS1+="\[\e[0;34m\]\$(parse_git_branch)"
-PS1+="\n\[\e[0;34m\]❮❮\[\e[0m\] "
+PS1+="\[\e[0;34m\]$(parse_git_branch)"
+PS1+="\n\[\e[0;34m\]❯❯\[\e[0m\] "
+
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ tmux ]] && [[ -z "$TMUX" ]]; then
+    exec tmux
+fi
 
 eval `dircolors ~/.config/ls_color/ls.color`
 
@@ -47,7 +51,11 @@ export HISTFILESIZE=
 export HISTSIZE=
 
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/golang
-export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/bin:$PATH
+export GOPATH=$HOME/go
+export PATH=$HOME/bin:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$HOME/.gem/ruby/2.7.0/bin:$PATH
 export GO111MODULE=on
 
+# Environment variable to allow scrolling using touchscreen in firefox
+export MOZ_USE_XINPUT2=1
+
+export PATH="$PATH:$HOME/.local/bin"
