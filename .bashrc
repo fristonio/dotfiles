@@ -8,17 +8,17 @@
 export LANG=en_US.UTF-8
 export EDITOR='vim'
 
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/( \1)/'
-}
-
-PS1="\[\e[0;34m\][\[\e[0;32m\]\u\[\e[0;34m\]] \[\e[0;34m\]\$ \[\e[1;33m\]\$(dirs +0) "
-PS1+="\[\e[0;34m\]$(parse_git_branch)"
-PS1+="\n\[\e[0;34m\]❯❯\[\e[0m\] "
-
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ tmux ]] && [[ -z "$TMUX" ]]; then
     exec tmux
 fi
+
+function git_parse_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' | sed -e 's/* \(.*\)/( \1)/'
+}
+
+PS1="\[\e[0;34m\][\[\e[0;32m\]\u\[\e[0;34m\]] \[\e[0;34m\]\$ \[\e[1;33m\]\$(dirs +0) "
+PS1+="\[\e[0;34m\]\$(git_parse_branch)\[\e[00m\]"
+PS1+="\n\[\e[1;34m\]ᗆ \[\e[0m\]"
 
 eval `dircolors ~/.config/ls_color/ls.color`
 
