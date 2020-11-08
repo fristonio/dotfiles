@@ -8,8 +8,10 @@
 export LANG=en_US.UTF-8
 export EDITOR='vim'
 
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ tmux ]] && [[ -z "$TMUX" ]]; then
-    exec tmux
+if ! [[ "${EXEC_TMUX}" -eq "" ]]; then
+    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ tmux ]] && [[ -z "$TMUX" ]]; then
+        exec tmux
+    fi
 fi
 
 function git_parse_branch() {
@@ -20,42 +22,40 @@ PS1="\[\e[0;34m\][\[\e[0;32m\]\u\[\e[0;34m\]] \[\e[0;34m\]\$ \[\e[1;33m\]\$(dirs
 PS1+="\[\e[0;34m\]\$(git_parse_branch)\[\e[00m\]"
 PS1+="\n\[\e[1;34m\]ᗆ \[\e[0m\]"
 
-eval `dircolors ~/.config/ls_color/ls.color`
+[ -f ~/.config/ls_color/ls.color ] && eval `dircolors ~/.config/ls_color/ls.color`
 
 alias cl="clear"
 alias off="sudo poweroff"
 alias restart="sudo reboot"
 alias install="sudo pacman -S"
 alias got="xdg-open"
-alias subl="subl3"
-# alias python="python3.5"
 
 alias gl="git log --oneline --graph --abbrev-commit --decorate"
 alias gs="git status"
-alias gcr="git clone"
-alias gcn="git checkout -b"
+alias gcb="git checkout -b"
 alias ls='ls --group-directories-first --color=auto'
 alias l='ls -la --color=auto --group-directories-first'
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
-alias fb='filebrowser -d ~/.filebrowser.db -p 4444 -a 0.0.0.0'
-
 alias grep='grep -i --color'
 
-[ -s "/home/fristonio/.scm_breeze/scm_breeze.sh" ] && source "/home/fristonio/.scm_breeze/scm_breeze.sh"
+alias laptopscreen='xrandr --output eDP-1 --auto && xrandr --output DP-1 --off'
+alias monitorscreen='xrandr --output eDP-1 --off && xrandr --output DP-1 --auto'
+alias screensetup='xrandr --output eDP-1 --auto && xrandr --output DP-1 --auto'
 
+# Setup SCM Breeze for git configuration - https://github.com/scmbreeze/scm_breeze
+[ -s "/home/fristonio/.scm_breeze/scm_breeze.sh" ] && source "/home/fristonio/.scm_breeze/scm_breeze.sh"
+# Setup fzf for easy reverse search in bash.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export HISTFILESIZE=
 export HISTSIZE=
 
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.gem/ruby/2.7.0/bin"
+
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
-export PATH=$HOME/bin:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$HOME/.gem/ruby/2.7.0/bin:$PATH
 export GO111MODULE=on
 
 # Environment variable to allow scrolling using touchscreen in firefox
 export MOZ_USE_XINPUT2=1
-
-export PATH="$PATH:$HOME/.local/bin"

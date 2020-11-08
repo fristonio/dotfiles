@@ -26,7 +26,6 @@ call plug#begin(expand('~/./plugged'))
 " Vim Plug Configuration
 """""""""""""""""""""""""""""""""""""""""
 Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -35,13 +34,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
 Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
-Plug 'w0rp/ale'
+Plug 'preservim/tagbar'
+Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb'
 Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'powerline/powerline'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -50,6 +50,10 @@ Plug 'wincent/command-t'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-rooter'
 Plug 'ervandew/supertab'
+Plug 'stephpy/vim-yaml'
+Plug 'Yggdroot/indentLine'
+" Highlight word under the cursor.
+Plug 'RRethy/vim-illuminate'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -68,7 +72,6 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
 "" Snippets
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " Language specific plugins
@@ -85,6 +88,16 @@ Plug 'jelera/vim-javascript-syntax'
 
 Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
+
+" Plugin for icons in Vim, disable this if there is no UTF8 support
+Plug 'ryanoasis/vim-devicons'
+
+" Language plugin for Ziglang
+Plug 'ziglang/zig.vim'
+
+" Org mode for VIM
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
 
 call plug#end()
 
@@ -125,7 +138,7 @@ syntax on
 set ruler
 set number
 syntax enable
-colorscheme gruvbox
+colorscheme onedark
 set background=dark
 
 "" Disable the blinking cursor.
@@ -154,10 +167,20 @@ if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
 
+" Vim Rooter
+let g:rooter_manual_only = 1
+
+
+"""""""""""""""""
+" Vim indentLine
+"""""""""""""""""
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_enabled = 1
+
 """""""""""""""""
 " Vim Airline
 """""""""""""""""
-let g:airline_theme = 'powerlineish'
+let g:airline_theme = 'onedark'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -215,10 +238,16 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
+" Close nerdtree when it is the lst window
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+
 """"""""""""""""""""""""""""
 " grep.vim configuration
 """"""""""""""""""""""""""""
-nnoremap <silent> <leader>f :Rgrep<CR>
+nnoremap <silent> <leader>f :Ag<CR>
 let Grep_Default_Options = '-IR'
 let Grep_Skip_Files = '*.log *.db'
 let Grep_Skip_Dirs = '.git node_modules vendor'
@@ -246,9 +275,11 @@ let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/
 
 " The Silver Searcher
 if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --path-to-ignore ~/.agignore -g ""'
   set grepprg=ag\ --nogroup\ --nocolor
 endif
+
+let g:ag_working_path_mode="r"
 
 " ripgrep
 if executable('rg')
@@ -270,10 +301,14 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
 
 " ale
+let g:ale_fix_on_save = 1
 let g:ale_linters = {}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
 
 " Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
+nmap <silent> <C-t> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
 " Disable visualbell
@@ -283,9 +318,7 @@ if has('autocmd')
 endif
 
 "" Copy/Paste/Cut
-if has('unnamedplus')
-  set clipboard=unnamed,unnamedplus
-endif
+set clipboard^=unnamed,unnamedplus
 
 """""""""""""""""""""""""""""""""""""""""""
 " Configuration Section
@@ -346,7 +379,7 @@ let NERDTreeShowHidden = 1
 filetype indent on
 filetype plugin on
 
-" Change gutter column width of number column 
+" Change gutter column width of number column
 set nuw=5
 
 " This option determines the number of context lines you would like to see
@@ -356,7 +389,7 @@ set scrolloff=10
 " Restrict vim from creating swp files
 " set noswapfile
 
-" // at the end of the directory will store the files using full paths so 
+" // at the end of the directory will store the files using full paths so
 " file with same names in different directories do not conflict with each
 " other.
 set directory=~/.vim/.swap//
@@ -426,10 +459,12 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 """"""""""""""""""""""""""""""""""""""""
 
 " CTRL + c to exit insert mode and go to normal mode
-inoremap <C-j> <Esc>
-vnoremap <C-j> <Esc>
 inoremap <C-c> <Esc>
 vnoremap <C-c> <Esc>
+
+" CTRL + BackSpace for killing previous word
+noremap <C-BS> db
+inoremap <C-BS> <C-O>db
 
 " Map <leader>s(;s) to save the current file opened in Vim and <leader>sa to
 " save all write all changed files and keep working
@@ -454,6 +489,10 @@ noremap <leader>q :q<CR>
 vnoremap <leader>q <C-C>:q<CR>
 inoremap <leader>q <C-O>:q<CR>
 
+noremap <C-q> :q<CR>
+vnoremap <C-q> <C-C>:q<CR>
+inoremap <C-q> <C-O>:q<CR>
+
 " Setup Tabs for vim
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
@@ -472,7 +511,7 @@ nnoremap <leader>. :lcd %:p:h<CR>
 " ;p will paste clipboard into buffer
 " ;c will copy entire buffer into clipboard
 noremap <leader>p :read !xsel --clipboard --output<cr>
-noremap <leader>c :w !xsel -ib<cr><cr>
+noremap <leader>c :w !xsel -i -s <CR><CR>
 
 "" Split
 noremap <Leader>h :<C-u>split<CR>
@@ -480,15 +519,11 @@ noremap <Leader>v :<C-u>vsplit<CR>
 
 " Navigation between buffers <leader>h for previous buffer and <leader>l for
 " next buffer
-noremap <leader>h :bprevious<CR>
-inoremap <leader>h <C-O>:bprevious<CR>
-noremap <leader>j :bprevious<CR>
-inoremap <leader>j <C-O>:bprevious<CR>
+noremap <leader>k :bprevious<CR>
+inoremap <leader>k <C-O>:bprevious<CR>
 
-noremap <leader>l :bnext<CR>
-inoremap <leader>l <C-O>:bnext<CR>
-noremap <leader>k :bnext<CR>
-inoremap <leader>k <C-O>:bnext<CR>
+noremap <leader>j :bnext<CR>
+inoremap <leader>j <C-O>:bnext<CR>
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
@@ -518,10 +553,9 @@ nnoremap <silent> <leader><space> :noh<cr>
 inoremap <silent> <leader><space> <C-O>:noh<cr>
 
 "" Switching windows
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
+" For moving up and down use C-w j or C-w k
 
 "*****************************************************************************
 "" Custom Language configs
@@ -560,6 +594,7 @@ let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_trailing_whitespace_error = 0
 let g:go_highlight_extra_types = 1
+let g:go_auto_type_info = 1
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
@@ -655,4 +690,3 @@ let python_highlight_all = 1
 au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
