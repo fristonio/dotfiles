@@ -14,6 +14,8 @@ if ! [[ "${EXEC_TMUX}" -eq "" ]]; then
     fi
 fi
 
+export TERM=xterm-256color
+
 function git_parse_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' | sed -e 's/* \(.*\)/( \1)/'
 }
@@ -35,6 +37,16 @@ alias gs="git status"
 alias gcb="git checkout -b"
 alias ls='ls --group-directories-first --color=auto'
 alias l='ls -la --color=auto --group-directories-first'
+alias k='kubectl'
+
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/go/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/.gem/ruby/3.7.0/bin"
+
+if command -v exa &> /dev/null; then
+	alias l='exa -l'
+	alias ls='exa'
+	alias ll='exa -l'
+	alias lll='exa -la'
+fi
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias grep='grep -i --color'
@@ -51,11 +63,13 @@ alias screensetup='xrandr --output eDP-1 --auto && xrandr --output DP-1 --auto'
 export HISTFILESIZE=
 export HISTSIZE=
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.gem/ruby/2.7.0/bin"
-
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export GO111MODULE=on
 
 # Environment variable to allow scrolling using touchscreen in firefox
 export MOZ_USE_XINPUT2=1
+
+# Configurew autojump for bash
+[[ -s /home/fristonio/.autojump/etc/profile.d/autojump.sh ]] && source /home/fristonio/.autojump/etc/profile.d/autojump.sh ]]
+export PATH=$PATH:/usr/local/kubebuilder/bin
