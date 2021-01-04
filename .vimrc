@@ -36,26 +36,32 @@ Plug 'vim-scripts/CSApprox'
 Plug 'Raimondi/delimitMate'
 Plug 'preservim/tagbar'
 Plug 'dense-analysis/ale'
-Plug 'avelino/vim-bootstrap-updater'
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb'
-Plug 'morhetz/gruvbox'
+
+" VIM theme packs
+" Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
+" Plug 'morhetz/gruvbox'
+" Plug 'chriskempson/base16-vim'
+
 Plug 'airblade/vim-gitgutter'
 Plug 'powerline/powerline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'townk/vim-autoclose'
-Plug 'wincent/command-t'
+
+" This plugin needs ruby support
+" Plug 'wincent/command-t'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-rooter'
 Plug 'ervandew/supertab'
-Plug 'stephpy/vim-yaml'
+
 Plug 'Yggdroot/indentLine'
-" Highlight word under the cursor.
+
+" To highlight word under the cursor.
 Plug 'RRethy/vim-illuminate'
 
-" Base16 themes for vim
-Plug 'chriskempson/base16-vim'
+" Terraform plugin for vim
+Plug 'hashivim/vim-terraform'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -67,14 +73,15 @@ let g:make = 'gmake'
 if exists('make')
         let g:make = 'make'
 endif
+
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
+" Plug 'xolox/vim-session'
 
 "" Snippets
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 
 " Language specific plugins
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
@@ -82,10 +89,7 @@ Plug 'ludwig/split-manpage.vim'
 
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
-Plug 'pbrisbin/vim-syntax-shakespeare'
-
-Plug 'jelera/vim-javascript-syntax'
-
+" Rust language packages.
 Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
 
@@ -101,6 +105,11 @@ Plug 'vivien/vim-linux-coding-style'
 Plug 'jjo/vim-cue'
 Plug 'plasticboy/vim-markdown'
 
+" Keeps a stack of Vim yanks
+Plug 'maxbrunsfeld/vim-yankstack'
+
+Plug 'sheerun/vim-polyglot'
+
 call plug#end()
 
 " Required:
@@ -114,12 +123,10 @@ let $VIMRUNTIME="/usr/local/vim/runtime/"
 """""""""""""""""""""""""""""""""""""""""""
 " Vundles plugins configuration
 """""""""""""""""""""""""""""""""""""""""""
-" Setup GUI
-if !has('gui_running')
-  set t_Co=256
-endif
-if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
-  " screen does not (yet) support truecolor
+" Enable truecolor support for vim
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 
@@ -140,11 +147,15 @@ syntax on
 set ruler
 set number
 syntax enable
+
+" OneDark configuration
 let g:onedark_hide_endofbuffer = 1
+let g:onedark_terminal_italics = 1
+
 " Configure theme
 colorscheme onedark
-" colorscheme base16-atelier-dune
 set background=dark
+" colorscheme base16-atelier-dune
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -193,7 +204,7 @@ autocmd FileType markdown set textwidth=79
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_enabled = 1
 set list lcs=tab:\ \ ┊,space:·
-hi SpecialKey ctermfg=grey guifg=grey21
+hi SpecialKey ctermfg=236 guifg=grey21
 
 """""""""""""""""
 " Vim Airline
@@ -319,12 +330,6 @@ nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
 "Recovery commands from history through FZF
 nmap <leader>y :History:<CR>
-
-" snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
 
 " ale
 let g:ale_fix_on_save = 1
@@ -523,8 +528,8 @@ nnoremap <silent> <S-t> :tabnew<CR>
 " SET Up buffers for vim
 
 " Open a new empty buffer
-noremap <leader>t :enew<CR>
-inoremap <leader>t <C-O>f:enew<CR>
+" noremap <leader>t :enew<CR>
+" inoremap <leader>t <C-O>f:enew<CR>
 
 "" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
@@ -605,6 +610,7 @@ endfunction
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
+let g:go_def_mode = "gopls"
 
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
@@ -621,6 +627,7 @@ let g:go_highlight_extra_types = 1
 let g:go_auto_type_info = 1
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
 
 augroup completion_preview_close
   autocmd!
@@ -704,12 +711,6 @@ let g:jedi#smart_auto_mappings = 0
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
 
-" Syntax highlight
-" Default highlight is better than polyglot
-let g:polyglot_disabled = ['python']
-let python_highlight_all = 1
-
-
 " rust
 " Vim racer
 au FileType rust nmap gd <Plug>(rust-def)
@@ -726,3 +727,4 @@ function LinuxFormatting()
 endfunction
 
 let g:linuxsty_patterns = [ "bpf", "kernel-upstream", "linux" ]
+set cinoptions=:0(0u0w1W1m1

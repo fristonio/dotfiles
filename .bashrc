@@ -14,15 +14,33 @@ if ! [[ "${EXEC_TMUX}" -eq "" ]]; then
     fi
 fi
 
-export TERM=xterm-256color
+# Do not set TERM in bash configuration
+# export TERM=xterm-256color
+
+NO_COLOR="\[\e[00m\]"
+BLUE_COLOR="\[\e[0;34m\]"
+GREEN_COLOR="\[\e[0;32m\]"
+YELLOW_COLOR="\[\e[0;33m\]"
+RED_COLOR="\[\e[0;31m\]"
+CYAN_COLOR="\[\e[0;36m\]"
 
 function git_parse_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' | sed -e 's/* \(.*\)/( \1)/'
 }
 
-PS1="\[\e[0;34m\][\[\e[0;32m\]\u\[\e[0;34m\]] \[\e[0;34m\]\$ \[\e[1;33m\]\$(dirs +0) "
-PS1+="\[\e[0;34m\]\$(git_parse_branch)\[\e[00m\]"
-PS1+="\n\[\e[1;34m\]ᗆ \[\e[0m\]"
+function get_dollar_sign(){
+    es=$?
+    if [ $es -eq 0 ]
+    then
+        echo -e "\e[0;34m\$\e[0;00m"
+    else
+        echo -e "\e[0;31m\$\e[0;00m"
+    fi
+}
+
+PS1="${BLUE_COLOR}[${GREEN_COLOR}\u ${YELLOW_COLOR}➜ ${GREEN_COLOR}\@${BLUE_COLOR}] \$(get_dollar_sign) ${YELLOW_COLOR}\$(dirs +0) "
+PS1+="${BLUE_COLOR}\$(git_parse_branch)${NO_COLOR}"
+PS1+="\n${BLUE_COLOR}ᗆ ${NO_COLOR}"
 
 [ -f ~/.config/ls_color/ls.color ] && eval `dircolors ~/.config/ls_color/ls.color`
 
@@ -38,6 +56,8 @@ alias gcb="git checkout -b"
 alias ls='ls --group-directories-first --color=auto'
 alias l='ls -la --color=auto --group-directories-first'
 alias k='kubectl'
+alias notes='vim ~/Documents/notes'
+alias shownotes='(cd ~/Documents/notes && glow)'
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/go/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/.gem/ruby/3.7.0/bin"
 
@@ -73,3 +93,5 @@ export MOZ_USE_XINPUT2=1
 # Configurew autojump for bash
 [[ -s /home/fristonio/.autojump/etc/profile.d/autojump.sh ]] && source /home/fristonio/.autojump/etc/profile.d/autojump.sh ]]
 export PATH=$PATH:/usr/local/kubebuilder/bin
+
+source <(kubectl completion bash)

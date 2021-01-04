@@ -113,80 +113,60 @@ schemes:
       cyan: '#5dbbc1'
       white: '#88909f'
 # }}}
-# {{{ Edge dark neon
-  edge_dark_neon:  &edge_dark_neon
+  custom: &custom
+    # Default colors
     primary:
-      background: "0x2b2d3a"
-      foreground: "0xc5cdd9"
+      background: '0x282c34'
+      foreground: '0xbbc2cf'
 
+    # Normal colors
     normal:
-      black: "0x363a4e"
-      red: "0xec7279"
-      green: "0xa0c980"
-      yellow: "0xdeb974"
-      blue: "0x6cb6eb"
-      magenta: "0xd38aea"
-      cyan: "0x5dbbc1"
-      white: "0xc5cdd9"
+      black:   '0x3b4252'
+      red:     '0xff6c6b'
+      green:   '0xb0b846'
+      yellow:  '0xecbe7b'
+      blue:    '0x51afef'
+      magenta: '0xc678dd'
+      cyan:    '0x8bba7f'
+      white:   '0xbbc2cf'
 
     bright:
-      black: "0x363a4e"
-      red: "0xec7279"
-      green: "0xa0c980"
-      yellow: "0xdeb974"
-      blue: "0x6cb6eb"
-      magenta: "0xd38aea"
-      cyan: "0x5dbbc1"
-      white: "0xc5cdd9"
-# }}}
-# {{{ Forest Night
-  forest_night: &forest_night
-    primary:
-      background: '#323d43'
-      foreground: '#d8caac'
+      black:   '0x4c566a'
+      red:     '0xff6c6b'
+      green:   '0x98be65'
+      yellow:  '0xecbe7b'
+      blue:    '0x51afef'
+      magenta: '0xc678dd'
+      cyan:    '0x8bba7f'
+      white:   '0xbbc2cf'
 
-    normal:
-      black:   '#868d80'
-      red:     '#e68183'
-      green:   '#a7c080'
-      yellow:  '#d9bb80'
-      blue:    '#89beba'
-      magenta: '#d3a0bc'
-      cyan:    '#87c095'
-      white:   '#d8caac'
 
-    bright:
-      black:   '#868d80'
-      red:     '#e68183'
-      green:   '#a7c080'
-      yellow:  '#d9bb80'
-      blue:    '#89beba'
-      magenta: '#d3a0bc'
-      cyan:    '#87c095'
-      white:   '#d8caac'
-# }}}
 colors: *base16_atelier_dune
 background_opacity: 1
 draw_bold_text_with_bright_colors: false
 use_thin_strokes: true
 
 font:
-  size: 10.4
+  offset:
+    x: 0
+    y: 1
+  size: 9
   # The normal (roman) font face to use.
   normal:
-    family: Fira Code
+    # family: Fira Code Retina
+    family: Fira Code Retina
     # Style can be specified to pick a specific face.
     style: Regular
 
   # The bold font face
   bold:
-    family: Fira Code
+    family: Fira Code Retina
     # Style can be specified to pick a specific face.
     style: Bold
 
   # The italic font face
   italic:
-    family: Fira Code
+    family: Fira Code Retina
     # Style can be specified to pick a specific face.
     style: Italic
 
