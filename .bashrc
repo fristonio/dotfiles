@@ -94,4 +94,6 @@ export MOZ_USE_XINPUT2=1
 [[ -s /home/fristonio/.autojump/etc/profile.d/autojump.sh ]] && source /home/fristonio/.autojump/etc/profile.d/autojump.sh ]]
 export PATH=$PATH:/usr/local/kubebuilder/bin
 
-source <(kubectl completion bash)
+if command -v kubectl &> /dev/null; then
+    source <(kubectl completion bash)
+fi
