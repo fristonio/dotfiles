@@ -115,11 +115,6 @@ call plug#end()
 " Required:
 filetype plugin indent on
 
-"""" End Vundle Configuration
-set rtp+=/usr/local/vim/
-set rtp+=/usr/local/vim/runtime/
-let $VIMRUNTIME="/usr/local/vim/runtime/"
-
 """""""""""""""""""""""""""""""""""""""""""
 " Vundles plugins configuration
 """""""""""""""""""""""""""""""""""""""""""
