@@ -1,7 +1,7 @@
 [user]
+  username = fristonio
   name = Deepesh Pathak
   email = deepeshpathak09@gmail.com
-  username = fristonio
   signingKey = ~/.ssh/id_ed25519.pub
 
 [core]
@@ -10,4 +10,7 @@
   autocrlf = false
 
 [pull]
-	ff = only
+  ff = only
+
+[init]
+  defaultBranch = main
