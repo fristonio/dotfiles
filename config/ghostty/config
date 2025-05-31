@@ -1,0 +1,18 @@
+# theme = dark:catppuccin-frappe,light:catppuccin-latte
+
+theme = catppuccin-frappe
+window-theme = auto
+
+keybind = ctrl+shift+l=new_split:right
+keybind = ctrl+shift+j=new_split:down
+macos-option-as-alt = left
+
+font-size = 15
+
+font-family = "JetBrains Mono"
+font-feature = "-liga"
+font-thicken = true
+
+maximize = true
+
+auto-update = check

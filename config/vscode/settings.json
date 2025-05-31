@@ -1,0 +1,36 @@
+{
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.preferredDarkColorTheme": "One Dark Pro Darker",
+    "workbench.preferredLightColorTheme": "One Dark Pro Darker",
+    "window.autoDetectColorScheme": true,
+
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontSize": 14,
+    "editor.fontLigatures": true,
+    "editor.fontWeight": "normal",
+
+    "editor.cursorBlinking": "blink",
+    "editor.cursorStyle": "line",
+
+    "explorer.confirmDelete": false,
+    "vim.enableNeovim": true,
+    
+    "editor.stickyScroll.enabled": true,
+
+    // Controls how the editor should render whitespace characters.
+    //  - none
+    //  - boundary: Render whitespace characters except for single spaces between words.
+    //  - selection: Render whitespace characters only on selected text.
+    //  - trailing: Render only trailing whitespace characters.
+    //  - all
+    "editor.renderWhitespace": "all",
+    
+    // Controls the display of line numbers.
+    //  - off: Line numbers are not rendered.
+    //  - on: Line numbers are rendered as absolute number.
+    //  - relative: Line numbers are rendered as distance in lines to cursor position.
+    //  - interval: Line numbers are rendered every 10 lines.
+    "editor.lineNumbers": "on",
+
+    "makefile.configureOnOpen": true
+}

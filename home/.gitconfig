@@ -1,0 +1,13 @@
+[user]
+  name = Deepesh Pathak
+  email = deepeshpathak09@gmail.com
+  username = fristonio
+  signingKey = ~/.ssh/id_ed25519.pub
+
+[core]
+  editor = nvim
+  fileMode = false
+  autocrlf = false
+
+[pull]
+	ff = only

@@ -4,6 +4,9 @@ set fileencodings=utf-8
 set ttyfast
 set backspace=indent,eol,start
 
+" To use ALE with COC
+let g:ale_disable_lsp = 1
+
 " Setup vim plug
 let vimplug_exists=expand('~/./autoload/plug.vim')
 if !filereadable(vimplug_exists)
@@ -20,7 +23,7 @@ if !filereadable(vimplug_exists)
 endif
 
 " Required:
-call plug#begin(expand('~/./plugged'))
+call plug#begin(expand('~/.vim/plugged'))
 
 """""""""""""""""""""""""""""""""""""""""
 " Vim Plug Configuration
@@ -32,15 +35,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/grep.vim'
-Plug 'vim-scripts/CSApprox'
+" Plug 'vim-scripts/CSApprox'
 Plug 'Raimondi/delimitMate'
 Plug 'preservim/tagbar'
-Plug 'dense-analysis/ale'
+
 Plug 'tpope/vim-rhubarb'
 
 " VIM theme packs
-" Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
+" Plug 'rakr/vim-one'
 " Plug 'morhetz/gruvbox'
 " Plug 'chriskempson/base16-vim'
 
@@ -62,6 +65,14 @@ Plug 'RRethy/vim-illuminate'
 
 " Terraform plugin for vim
 Plug 'hashivim/vim-terraform'
+
+Plug 'nix-community/rnix-lsp'
+
+Plug 'earthly/earthly.vim', { 'branch': 'main' }
+
+if has('python')
+    Plug 'puremourning/vimspector'
+endif
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -90,7 +101,7 @@ Plug 'ludwig/split-manpage.vim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 " Rust language packages.
-Plug 'racer-rust/vim-racer'
+" rustup component add rust-src -> To add rust source
 Plug 'rust-lang/rust.vim'
 
 " Plugin for icons in Vim, disable this if there is no UTF8 support
@@ -108,7 +119,12 @@ Plug 'plasticboy/vim-markdown'
 " Keeps a stack of Vim yanks
 Plug 'maxbrunsfeld/vim-yankstack'
 
+" For language syntax highlighting
 Plug 'sheerun/vim-polyglot'
+
+" LSP support
+Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -142,8 +158,6 @@ syntax on
 set ruler
 set number
 syntax enable
-
-" OneDark configuration
 let g:onedark_hide_endofbuffer = 1
 let g:onedark_terminal_italics = 1
 
@@ -176,11 +190,21 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Configuer ctags file
-set tags=./tags;/
+" set tags=./tags;/
+set tags=./tags,tags;
 
 if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
+
+" Vim COC
+inoremap <silent><expr> <c-space> coc#refresh()
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
 
 " Vim Rooter
 let g:rooter_manual_only = 1
@@ -328,10 +352,12 @@ nmap <leader>y :History:<CR>
 
 " ale
 let g:ale_fix_on_save = 1
-let g:ale_linters = {}
+let g:ale_linters = {'rust': ['analyzer']}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
 
 " Tagbar
 nmap <silent> <C-t> :TagbarToggle<CR>
@@ -418,8 +444,8 @@ set scrolloff=10
 " // at the end of the directory will store the files using full paths so
 " file with same names in different directories do not conflict with each
 " other.
-set directory=~/.vim/.swap//
-set backupdir=~/.vim/.backup//
+" set directory=~/.vim/.swap//
+" set backupdir=~/.vim/.backup//
 
 " session management
 let g:session_directory = "~/./session"
@@ -584,6 +610,12 @@ noremap <C-h> <C-w>h
 "*****************************************************************************
 "" Custom Language configs
 "*****************************************************************************
+" COC generic configuration
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " c
 autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
@@ -722,4 +754,4 @@ function LinuxFormatting()
 endfunction
 
 let g:linuxsty_patterns = [ "bpf", "kernel-upstream", "linux" ]
-set cinoptions=:0(0u0w1W1m1
+" set cinoptions=:0(0u0w1W1m1
