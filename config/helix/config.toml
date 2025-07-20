@@ -3,18 +3,19 @@ theme = "onedark"
 
 [editor]
 shell = ["bash", "-c"]
-rulers = [80]
+rulers = [120]
 bufferline = "multiple"
 trim-final-newlines = true
 trim-trailing-whitespace = true
 popup-border = "none" # popup, menu, all
+cursorline = true
 
 [editor.statusline]
 mode.normal = "󰬕 NOR"
 mode.insert = "󰬐 INS"
 mode.select = "󰬚 SEL"
 
-left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+left = ["mode", "spinner", "version-control", "file-name", "read-only-indicator", "file-modification-indicator"]
 center = []
 right = ["diagnostics", "selections", "register", "position", "file-encoding", "file-type"]
 
@@ -34,13 +35,23 @@ newline = "none"
 render = true
 character = "▏"
 
-# Key Remaps
+## Key Remaps
+
 [keys.insert]
 "C-c" = "normal_mode"
 
 [keys.normal]
-space.x = ":buffer-close"
+";" = "command_mode"
 "C-c" = "normal_mode"
 
+space.x = ":buffer-close"
+
+"A-down" = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+"A-up" = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
 [keys.select]
+";" = "command_mode"
 "C-c" = "normal_mode"
+
+"A-down" = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+"A-up" = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]

@@ -1,18 +1,58 @@
+# ghostty +list-keybinds --default
+
 # theme = dark:catppuccin-frappe,light:catppuccin-latte
-
 theme = catppuccin-frappe
-window-theme = auto
 
-keybind = ctrl+shift+l=new_split:right
-keybind = ctrl+shift+j=new_split:down
 macos-option-as-alt = left
 
-font-size = 15
-
+# brew install --cask font-jetbrains-mono
 font-family = "JetBrains Mono"
 font-feature = "-liga"
 font-thicken = true
 
-maximize = true
+font-size = 15
 
 auto-update = check
+
+quick-terminal-position = right
+quick-terminal-animation-duration = 0
+
+# KeyBindings
+keybind = alt+t=toggle_quick_terminal
+
+keybind = alt+a>l=new_split:right
+keybind = alt+a>j=new_split:down
+
+keybind = alt+h=goto_split:left
+keybind = alt+j=goto_split:down
+keybind = alt+k=goto_split:up
+keybind = alt+l=goto_split:right
+
+keybind = ctrl+alt+shift+h=resize_split:left,15
+keybind = ctrl+alt+shift+j=resize_split:down,15
+keybind = ctrl+alt+shift+k=resize_split:up,15
+keybind = ctrl+alt+shift+l=resize_split:right,15
+
+keybind = super+shift+r=equalize_splits
+
+keybind = alt+z=toggle_split_zoom
+
+keybind = super+shift+f=write_screen_file:paste
+keybind = super+shift+o=write_screen_file:open
+
+### Default Generic terminal binds
+
+# Ctrl+a Move cursor to start of line
+# Ctrl+e Move cursor to end of line
+# Ctrl+b Move back one character
+# Alt+b Move back one word
+# Ctrl+f Move forward one character
+# Alt+f Move forward one word
+# Ctrl+d Delete current character
+# Ctrl+w Cut the last word
+# Ctrl+k Cut everything after the cursor
+# Alt+d Cut word after the cursor
+# Alt+w Cut word before the cursor
+# Ctrl+y Paste the last deleted command
+# Ctrl+n Next command from the History
+# Ctrl+p previous command from the History
