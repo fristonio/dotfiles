@@ -27,5 +27,5 @@ map("v", "<leader>u", ":m '<-2<CR>gv=gv", { desc = "Move visual block up by 1 li
 
 -- <A-h> is already bound to switching tmux pane. rebind to Alt-Shift-V
 map({ "n", "t" }, "<A-V>", function()
-  require("nvterm.terminal").toggle "horizontal"
+  require("nvchad.term").toggle { pos = "sp", id = "hToggleTerm" }
 end, { desc = "Toggle horizontal terminal" })

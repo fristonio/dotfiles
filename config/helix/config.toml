@@ -1,0 +1,46 @@
+theme = "onedark"
+# theme = "catppuccin_frappe"
+
+[editor]
+shell = ["bash", "-c"]
+rulers = [80]
+bufferline = "multiple"
+trim-final-newlines = true
+trim-trailing-whitespace = true
+popup-border = "none" # popup, menu, all
+
+[editor.statusline]
+mode.normal = "󰬕 NOR"
+mode.insert = "󰬐 INS"
+mode.select = "󰬚 SEL"
+
+left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+center = []
+right = ["diagnostics", "selections", "register", "position", "file-encoding", "file-type"]
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+nbsp = "none"
+nnbsp = "none"
+newline = "none"
+
+[editor.indent-guides]
+render = true
+character = "▏"
+
+# Key Remaps
+[keys.insert]
+"C-c" = "normal_mode"
+
+[keys.normal]
+space.x = ":buffer-close"
+"C-c" = "normal_mode"
+
+[keys.select]
+"C-c" = "normal_mode"
