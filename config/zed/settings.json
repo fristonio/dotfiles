@@ -1,0 +1,98 @@
+{
+  "use_system_window_tabs": true,
+  "collaboration_panel": {
+    "button": false
+  },
+  "debugger": {
+    "dock": "right"
+  },
+  "helix_mode": true,
+  "audio": {
+    "experimental.legacy_audio_compatible": false,
+    "experimental.denoise": false,
+    "experimental.auto_speaker_volume": false
+  },
+  "git_panel": {
+    "dock": "right"
+  },
+  "theme": "Ayu Mirage",
+  "icon_theme": "Colored Zed Icons Theme Dark",
+  "disable_ai": true,
+  "base_keymap": "VSCode",
+
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+
+  "ui_font_size": 16.5,
+  "buffer_font_size": 16,
+  "buffer_font_weight": 750.0,
+  "ui_font_weight": 750.0,
+  "ui_font_features": {
+    "calt": true
+  },
+  "buffer_font_features": {
+    "calt": true
+  },
+
+  "vim_mode": false,
+  "relative_line_numbers": "disabled",
+  "tab_bar": {
+    "show": true
+  },
+  "tabs": {
+    "show_diagnostics": "errors",
+    "file_icons": true
+  },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
+  "title_bar": {
+    "show_branch_icon": true,
+    "show_sign_in": false,
+    "show_menus": true
+  },
+  "toolbar": {
+    "quick_actions": false
+  },
+  // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
+  "inlay_hints": {
+    "show_parameter_hints": false,
+    "show_type_hints": true,
+    "show_value_hints": true,
+    "show_other_hints": false,
+    "enabled": false // Buggy
+  },
+  // Use zed commit editor
+  "terminal": {
+    "font_size": 14.0,
+    "font_weight": 700.0,
+    "font_family": "JetBrainsMono Nerd Font",
+    "env": {
+      "EDITOR": "zed --wait"
+    }
+  },
+  // Turn off telemetry
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "features": {
+    "edit_prediction_provider": "none"
+  },
+  "agent": {
+    "button": false,
+    "expand_terminal_card": false,
+    "expand_edit_card": false,
+    "notify_when_agent_waiting": "never",
+    "enable_feedback": false,
+    "single_file_review": false,
+    "enabled": false
+  },
+  "format_on_save": "on",
+  "languages": {
+    "YAML": {
+      "format_on_save": "off"
+    }
+  }
+}
