@@ -1,19 +1,23 @@
-#
-# ~/.bashrc
-#
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+#!/usr/bin/env bash
 
 export LANG=en_US.UTF-8
 export EDITOR='nvim'
-export EXEC_TMUX=0
+export PAGER="less -FirSwX";
 
 # Remove zsh default shell warningin on macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# Do not set TERM in bash configuration
-# export TERM=xterm-256color
+shopt -s histappend
+shopt -s checkwinsize
+
+export HISTCONTROL=ignoredups:erasedups
+export HISTFILESIZE=
+export HISTSIZE=
+
+case "$(uname -s)" in
+  Darwin*) export PATH="/opt/homebrew/bin/:/opt/homebrew/sbin/:${PATH}";;
+esac
+export PATH="${PATH}:${HOME}/bin:${HOME}/.local/bin"
 
 NO_COLOR="\[\e[00m\]"
 BLUE_COLOR="\[\e[0;34m\]"
@@ -54,45 +58,31 @@ PS1="${BLUE_COLOR}[${GREEN_COLOR}\u\$(get_hostname) ${YELLOW_COLOR}➜ ${GREEN_C
 PS1+="${BLUE_COLOR}\$(git_parse_branch)${NO_COLOR}"
 PS1+="\n${BLUE_COLOR}ᗆ ${NO_COLOR}"
 
-[ -f ~/.config/ls_color/ls.color ] && eval `dircolors ~/.config/ls_color/ls.color`
-
-alias cls="clear"
-
-alias gl="git log --oneline --graph --abbrev-commit --decorate"
 alias gs="git status"
-alias gcb="git checkout -b"
+alias gl="git log --oneline --graph --abbrev-commit --decorate"
 
 alias grep='grep -i --color'
+
 alias ls='ls --color=auto'
 alias l='ls -la --color=auto'
-
-alias z='zoxide'
-
-alias tmuxedit='nvim ~/.tmux.conf'
-
-export HISTFILESIZE=
-export HISTSIZE=
-
-export GOPATH=$HOME/go
-
-case "$(uname -s)" in
-  Darwin*) export PATH="/opt/homebrew/bin/:/opt/homebrew/sbin/:${PATH}";;
-esac
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$GOPATH/bin:$HOME/.npm-packages/bin"
-
-# Makefile tab completion
-complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
-complete -W "\`find . -maxdepth 1 -type f -regex '.*.cc' -exec basename \{} .cc \;\`" make
-
-if command -v docker &> /dev/null; then
-  export DOCKER_HOST=unix:///var/run/docker.sock
-fi
-
 if command -v eza &> /dev/null; then
   alias l='eza -l'
   alias ls='eza'
   alias ll='eza -l'
   alias lll='eza -la'
+fi
+
+# Makefile tab completion
+complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
+complete -W "\`find . -maxdepth 1 -type f -regex '.*.cc' -exec basename \{} .cc \;\`" make
+
+if command -v go &> /dev/null; then
+  export GOPATH="${HOME}/go"
+  export PATH="${PATH}:${GOPATH}/bin"
+fi
+
+if command -v docker &> /dev/null; then
+  export DOCKER_HOST=unix:///var/run/docker.sock
 fi
 
 if command -v kubectl &> /dev/null; then
@@ -101,6 +91,7 @@ fi
 
 if command -v zoxide &> /dev/null; then
   eval "$(zoxide init bash)"
+  alias z='zoxide'
 fi
 
 if command -v fzf &> /dev/null; then
@@ -111,4 +102,4 @@ if command -v limactl &> /dev/null; then
   source <(limactl completion bash)
 fi
 
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "${HOME}/.cargo/env"

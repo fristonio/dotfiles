@@ -1,3 +1,4 @@
+# To view default ghostty configuration:
 # ghostty +list-keybinds --default
 
 # theme = dark:catppuccin-frappe,light:catppuccin-latte
@@ -40,7 +41,7 @@ keybind = alt+z=toggle_split_zoom
 keybind = super+shift+f=write_screen_file:paste
 keybind = super+shift+o=write_screen_file:open
 
-### Default Generic terminal binds
+### Generic terminal binds
 
 # Ctrl+a Move cursor to start of line
 # Ctrl+e Move cursor to end of line
