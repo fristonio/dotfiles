@@ -26,7 +26,7 @@ YELLOW_COLOR="\[\e[0;33m\]"
 RED_COLOR="\[\e[0;31m\]"
 CYAN_COLOR="\[\e[0;36m\]"
 
-PS1_EMIT_HOSTNAME=${PS1_EMIT_HOSTNAME:-}
+export PS1_EMIT_HOSTNAME=${PS1_EMIT_HOSTNAME:-}
 
 function git_parse_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' | sed -e 's/* \(.*\)/( \1)/'
