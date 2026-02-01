@@ -63,6 +63,8 @@ in
     silver-searcher
     tldr
     unzip
+    fd
+    yazi
 
     gcc
     binutils
